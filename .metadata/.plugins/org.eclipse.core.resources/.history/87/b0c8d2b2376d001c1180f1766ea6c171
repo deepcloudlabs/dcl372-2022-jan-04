@@ -1,0 +1,15 @@
+package com.example.imdb;
+
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.example.imdb.service.MovieService;
+
+public class App {
+	public static void main(String[] args) {
+		ConfigurableApplicationContext container =
+			new AnnotationConfigApplicationContext();
+		var movieSrv = 
+				container.getBean(MovieService.class);
+	}
+}

@@ -1,0 +1,20 @@
+package com.example.lottery.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import com.example.lottery.service.LotteryService;
+import com.example.lottery.service.RandomNumberService;
+import com.example.lottery.service.business.StandardLotteryService;
+
+@Configuration
+@ComponentScan("com.example.lottery.service")
+public class AppConfig {
+
+	@Bean
+	public LotteryService createLotteryService(
+			RandomNumberService randomNumberService) {
+		return new StandardLotteryService(randomNumberService);
+	}
+}

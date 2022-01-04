@@ -1,0 +1,15 @@
+package com.example.lottery.service.business;
+
+import java.util.List;
+
+import com.example.lottery.service.LotteryService;
+
+public class StandardLotteryService implements LotteryService {
+
+	@Override
+	public List<Integer> draw(int max, int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

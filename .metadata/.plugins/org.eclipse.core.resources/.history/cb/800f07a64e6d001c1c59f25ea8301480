@@ -1,0 +1,21 @@
+package com.example.lottery.service.business;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.lottery.service.LotteryService;
+import com.example.lottery.service.RandomNumberService;
+
+@Service
+public class StandardLotteryService implements LotteryService {
+	private RandomNumberService randomNumberService;
+	
+	
+	@Override
+	public List<Integer> draw(int max, int size) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

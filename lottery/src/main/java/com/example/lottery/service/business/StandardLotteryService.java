@@ -3,21 +3,13 @@ package com.example.lottery.service.business;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
-
 import com.example.lottery.service.LotteryService;
-import com.example.lottery.service.QualityLevel;
 import com.example.lottery.service.RandomNumberService;
-import com.example.lottery.service.ServiceQuality;
 
-@Service
 public class StandardLotteryService implements LotteryService {
 	private RandomNumberService randomNumberService;
 
-	public StandardLotteryService(
-			@ServiceQuality(QualityLevel.FAST)
-			RandomNumberService randomNumberService) {
+	public StandardLotteryService(RandomNumberService randomNumberService) {
 		this.randomNumberService = randomNumberService;
 	}
 
