@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
@@ -31,6 +32,7 @@ import com.example.imdb.viewmodel.CriteriaBean;
 @Repository
 @Scope("singleton")
 //@Profiling
+@ConditionalOnProperty(name = "persistence.method", havingValue = "inmemory")
 public class InMemoryMovieService implements MovieService {
 	// @Autowired // 1. Field Injection
 	private SequenceService sequenceSrv;
@@ -1603,8 +1605,14 @@ public class InMemoryMovieService implements MovieService {
 		return movie;
 	}
 
+	@CacheEvict(cacheNames = "genres")
+	public void addGenre(Genre genre) {}
+	
 	@Override
+	@Cacheable(cacheNames = "genres")
+	@Profiling
 	public Collection<Genre> findAllGenres() {
+		System.err.println("findAllGenres() is running...");
 		return genres.values();
 	}
 
