@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 
+import com.example.imdb.entity.Director;
 import com.example.imdb.entity.Genre;
 import com.example.imdb.entity.Movie;
 import com.example.imdb.service.MovieService;
@@ -33,5 +34,11 @@ public class ImdbRestController {
 	@GetMapping("movies")
 	public Collection<Movie> getMoviesByGenre(@RequestParam String genre) {
 		return movieService.findAllMoviesByGenre(genre);
+	}
+	
+	// GET http://localhost:8100/imdb/api/v1/directors
+	@GetMapping("directors")
+	public Collection<Director> getAllDirectors() {
+		return movieService.findAllDirectors();
 	}
 }
