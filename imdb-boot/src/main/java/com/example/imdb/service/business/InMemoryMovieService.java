@@ -9,10 +9,13 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+import com.example.imdb.aop.Profiling;
 import com.example.imdb.entity.Director;
 import com.example.imdb.entity.Genre;
 import com.example.imdb.entity.Movie;
@@ -27,7 +30,7 @@ import com.example.imdb.viewmodel.CriteriaBean;
  */
 @Repository
 @Scope("singleton")
-@Lazy
+//@Profiling
 public class InMemoryMovieService implements MovieService {
 	// @Autowired // 1. Field Injection
 	private SequenceService sequenceSrv;
@@ -1570,6 +1573,7 @@ public class InMemoryMovieService implements MovieService {
 	}
 
 	@Override
+	@Profiling
 	public Collection<Movie> findAllMoviesByGenre(String genre) {
 		Collection<Movie> resultList = new ArrayList<>();
 		Genre g = findGenreByName(genre);
