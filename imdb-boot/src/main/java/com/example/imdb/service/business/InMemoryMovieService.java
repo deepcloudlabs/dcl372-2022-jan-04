@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.annotation.CacheEvict;
@@ -33,6 +35,8 @@ import com.example.imdb.viewmodel.CriteriaBean;
 //@Profiling
 @ConditionalOnProperty(name = "persistence.method", havingValue = "inmemory")
 public class InMemoryMovieService implements MovieService {
+	private final Logger logger = LoggerFactory.getLogger(InMemoryMovieService.class);
+	
 	// @Autowired // 1. Field Injection
 	private SequenceService sequenceSrv;
 	private Map<Integer, Movie> movies;
@@ -55,7 +59,7 @@ public class InMemoryMovieService implements MovieService {
 
 	@PreDestroy
 	public void closeTheDoor() {
-		System.err.println("Closing the door when we exit the application...");
+		logger.info("Closing the door when we exit the application...");
 	}
 	
 	@PostConstruct
@@ -1611,7 +1615,7 @@ public class InMemoryMovieService implements MovieService {
 	@Cacheable(cacheNames = "genres")
 	@Profiling
 	public Collection<Genre> findAllGenres() {
-		System.err.println("findAllGenres() is running...");
+		logger.info("findAllGenres() is running...");
 		return genres.values();
 	}
 

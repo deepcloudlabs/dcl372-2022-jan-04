@@ -6,11 +6,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 @Aspect
 @Order(Integer.MIN_VALUE)
 public class ProfilingAspect {
+	private final Logger logger = LoggerFactory.getLogger(ProfilingAspect.class);
 
 //	@Around("execution(* com.example.imdb..*(..))")
 //	@Around("@target(profiling)") // class-level
@@ -24,8 +27,7 @@ public class ProfilingAspect {
 		var result = pjp.proceed();
 		var stop = System.nanoTime();
 		var duration = stop-start;
-		System.err.printf("%s runs %d ns.\n",
-				pjp.getSignature().getName(), duration);
+		logger.info("%s runs %d ns.",pjp.getSignature().getName(), duration);
 		return result;
 	}
 	

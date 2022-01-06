@@ -4,6 +4,8 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,6 +50,7 @@ public class JdbcTemplateMovieService implements MovieService {
 			AND d.directorID = ?""";
 	private static final RowMapper<Genre> GENRE_MAPPER = (rs, rowNum) -> new Genre(rs.getInt("genreID"), rs.getString("description"));
 	private static final RowMapper<Movie> MOVIE_MAPPER = (rs, rowNum) -> new Movie(rs.getInt("movieID"), rs.getString("title"),rs.getInt("year"),rs.getString("imdb"));
+	private final Logger logger = LoggerFactory.getLogger(JdbcTemplateMovieService.class);
 	
 	private JdbcTemplate jdbcTemplate;
 
@@ -109,7 +112,7 @@ public class JdbcTemplateMovieService implements MovieService {
 				return movie;
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}		
 		return null;
 	}
@@ -122,7 +125,7 @@ public class JdbcTemplateMovieService implements MovieService {
 				return movie;
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
@@ -138,7 +141,7 @@ public class JdbcTemplateMovieService implements MovieService {
 				}
 			}
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+			logger.error(e.getMessage());
 		}
 		return null;
 	}
