@@ -8,27 +8,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.world.dao.CountryDao;
-import com.example.world.entity.Country;
+import com.example.world.entity.jpa.Country;
+import com.example.world.repository.CountryRepository;
 
 @RestController
 @RequestMapping
 @CrossOrigin("*")
 public class WorldRestController {
-	private CountryDao countryDao;
+	private CountryRepository countryRepository;
 	
-	public WorldRestController(CountryDao countryDao) {
-		this.countryDao = countryDao;
+	public WorldRestController(CountryRepository countryRepository) {
+		this.countryRepository = countryRepository;
 	}
 
 	@GetMapping("continents")
 	public Collection<String> getContinents(){
-		return countryDao.getAllContinents();
+		return countryRepository.getAllContinents();
 	}
 	
 	@GetMapping("countries")
 	public Collection<Country> getCountries(@RequestParam String continent){
-		return countryDao.findCountriesByContinent(continent);
+		return countryRepository.getCountriesByContinent(continent);
 	}
 		
 }

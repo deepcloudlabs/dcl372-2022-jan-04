@@ -22,9 +22,8 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="Movie.findByGenre", 
 			query = """
-					select m from Movie m, Genre g 
+					select m from Movie m JOIN m.genres g 
                     where g.description = :description
-                    and   g in m.genres
                     """)
 })
 public class Movie {
