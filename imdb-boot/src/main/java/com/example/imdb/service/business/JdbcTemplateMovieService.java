@@ -35,7 +35,7 @@ public class JdbcTemplateMovieService implements MovieService {
 	private static final String SELECT_MOVIES_BY_GENRE ="""
 			SELECT m.* FROM MOVIES m, GENRES g, MOVIEGENRES mg
 			WHERE m.movieID = mg.movieID
-			AND g.genreID = mg.genreID
+			AND g.genreid = mg.genreid
 			AND g.description = ?""";
 	private static final String SELECT_MOVIES_BY_YEAR_BETWEEN_AND_GENRE ="""
 			SELECT m.* FROM MOVIES m, GENRES g, MOVIEGENRES mg
