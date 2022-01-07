@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.annotation.RequestScope;
 
-import com.example.world.entity.jpa.Country;
-import com.example.world.repository.CountryRepository;
+import com.example.world.entity.document.Country;
+import com.example.world.repository.CountryMongoRepository;
 
 @RestController
 @RequestScope
 @CrossOrigin("*")
 public class WorldRestController {
-	private CountryRepository countryRepository;
+	private CountryMongoRepository countryRepository;
 	
-	public WorldRestController(CountryRepository countryRepository) {
+	public WorldRestController(CountryMongoRepository countryRepository) {
 		this.countryRepository = countryRepository;
 	}
 
@@ -28,7 +28,7 @@ public class WorldRestController {
 	
 	@GetMapping("countries")
 	public Collection<Country> getCountries(@RequestParam String continent){
-		return countryRepository.getCountriesByContinent(continent);
+		return countryRepository.findAllByContinent(continent);
 	}
 		
 }
