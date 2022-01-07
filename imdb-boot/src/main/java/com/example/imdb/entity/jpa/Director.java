@@ -17,9 +17,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "directors")
-@NamedEntityGraphs({
-	
-})
 public class Director {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

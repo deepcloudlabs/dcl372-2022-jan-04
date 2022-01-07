@@ -7,10 +7,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "genres")
+@NamedQueries({
+	@NamedQuery(name = "Genre.findAll", query = "select g from Genre g")
+})
 public class Genre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

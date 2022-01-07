@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,6 +19,14 @@ import javax.persistence.Table;
 //            Configuration by exception 
 @Entity
 @Table(name="movies")
+@NamedQueries({
+	@NamedQuery(name="Movie.findByGenre", 
+			query = """
+					select m from Movie m, Genre g 
+                    where g.description = :description
+                    and   g in m.genres
+                    """)
+})
 public class Movie {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
