@@ -1,0 +1,119 @@
+<html>
+
+<head>
+	<title>Banking App</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="js/lib/knockout-3.5.1.js"></script>
+	<script src="js/appconfig.js"></script>
+	<script src="js/banking.js"></script>
+</head>
+
+<body>
+	<p>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">
+				<h3><span class="card-title">Customer</span></h3>
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label class="form-label" for="identity">Identity:</label>
+					<div class="input-group mb-3">
+						<input type="text"" id=" identity" data-bind="value: customer.identity" class="form-control">
+						<div class="input-group-append">
+							<button data-bind="click: find" class="btn btn-success">Find</button>
+						</div>
+					</div>
+				</div>
+				<p>
+				<div class="form-group">
+					<label class="form-label" for="fullName">Full Name:</label>
+					<input readonly type="text"" id=" fullName" data-bind="value: customer.fullname"
+						class="form-control">
+				</div>
+				<div class="form-group">
+					<label class="form-label" for="email">E-mail:</label>
+					<input readonly type="text" id=" email" data-bind="value: customer.email" class="form-control">
+				</div>
+				<div class="form-group">
+					<label class="form-label" for="byear">Birth Year:</label>
+					<input readonly type="text"" id=" byear" data-bind="value: customer.birthYear" class="form-control">
+				</div>
+			</div>
+		</div>
+		<p>
+		<div class="card">
+			<!-- ko if: customer.accounts().length > 0 -->
+			<div class="card-header">
+				<h3><span class="card-title">Accounts</span></h3>
+			</div>
+			<div class="card-body">
+				<table class="table table-success table-bordered table-responsive table-striped table-hover">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Iban</th>
+							<th>Balance</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody data-bind="foreach: {data: customer.accounts, as: 'account'}">
+						<tr>
+							<td data-bind="text: $index() + 1"></td>
+							<td data-bind="text: account.iban"></td>
+							<td data-bind="text: account.balance"></td>
+							<td data-bind="text: account.status"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- /ko -->
+		</div>
+		<p />
+		<div class="card">
+			<div class="card-header">
+				<h3><span class="card-title">Money Transfer</span></h3>
+			</div>
+			<div class="card-body">
+				<div class="form-group">
+					<label class="form-label" for="fromCustomer">From Customer:</label>
+					<input type="text"" id=" fromCustomer"
+						data-bind="value: transfer.fromIdentity, event: {blur: findFromCustomer}" class="form-control">
+				</div>
+				<div class="form-group">
+					<label class="form-label" for="fromAccount">Account:</label>
+					<select id="fromAccount"
+						data-bind="options: transfer.fromAccounts, optionsText: 'iban', value: transfer.fromAccount"
+						class="form-select">
+					</select>
+				</div>
+				<hr class="bg-primary border-5 border-top border-primary">
+				<div class="form-group">
+					<label class="form-label" for="toCustomer">To Customer:</label>
+					<input type="text"" id=" toCustomer"
+						data-bind="value: transfer.toIdentity, event: {change: findToCustomer}" class="form-control">
+				</div>
+				<div class="form-group">
+					<label class="form-label" for="toAccount">Account:</label>
+					<select id="toAccount"
+						data-bind="options: transfer.toAccounts, optionsText: 'iban', value: transfer.toAccount"
+						class="form-select">
+					</select>
+				</div>
+				<hr class="bg-primary border-5 border-top border-primary">
+				<div class="form-group">
+					<label class="form-label" for="amount">Amount:</label>
+					<input type="text"" id=" amount" data-bind="value: transfer.amount" class="form-control">
+				</div>
+				<p>
+				<p>
+					<button data-bind="click: transferMoney" class="btn btn-success">Transfer</button>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
