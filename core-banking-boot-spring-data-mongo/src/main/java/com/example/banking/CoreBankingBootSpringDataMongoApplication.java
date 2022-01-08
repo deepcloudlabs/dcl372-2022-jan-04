@@ -24,6 +24,7 @@ public class CoreBankingBootSpringDataMongoApplication implements ApplicationRun
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		/*
 		 var jack = new CustomerDocument();
 		 jack.setIdentity("69565326260");
 		 jack.setFullname("jack bauer");
@@ -35,6 +36,15 @@ public class CoreBankingBootSpringDataMongoApplication implements ApplicationRun
 		 accounts.add(new Account("TR060006282729837448422961", 30_000, AccountStatus.ACTIVE));
 		 jack.setAccounts(accounts);
 		 customerRepository.save(jack);
+		 */
+		 customerRepository.findAllByBirthYearBetween(1950,1960)
+		                   .forEach(System.out::println);
+		 customerRepository.findByEmail("jack.bauer@example.com")
+		                   .ifPresent(System.out::println);
+		 customerRepository.findById("69565326260")
+		 				   .ifPresent(System.out::println);
+		 customerRepository.findByAccountsIban("TR670006298845544846135199")
+		                   .ifPresent(System.out::println);
 	}
 
 }

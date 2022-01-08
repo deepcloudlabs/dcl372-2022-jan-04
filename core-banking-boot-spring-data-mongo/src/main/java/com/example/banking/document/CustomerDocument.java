@@ -15,11 +15,11 @@ public class CustomerDocument {
 	@Field(name = "full_name")
 	private String fullname;
 	@Field(name = "byear")
-	private int birthYear;
+	private int birthYear; // ByBirthYear
 	@Indexed(unique = true)
-	private String email;
+	private String email;  // ByEmail
 	
-	private List<Account> accounts;
+	private List<Account> accounts; // ByAccountsIban
 	// 1. No-arg Constructor: MUST (Spring Data)
 	// 2. Setter/Getter: MUST (Spring Data)
 	// 3. equals() and hashCode(): MUST (Java)

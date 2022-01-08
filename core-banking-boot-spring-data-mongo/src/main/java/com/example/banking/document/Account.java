@@ -2,8 +2,11 @@ package com.example.banking.document;
 
 import java.util.Objects;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+
 // Alt + Shift + S -> Generates code!
 public class Account {
+	@Indexed(unique = true)
 	private String iban;
 	private double balance;
 	private AccountStatus status;
