@@ -52,6 +52,7 @@ public class CoreBankingBootSpringDataMongoApplication implements ApplicationRun
 		}
 		customerRepository.findAllByBirthYearBetween(1950, 1960).forEach(System.out::println);
 		customerRepository.findByEmail("jack.bauer@example.com").ifPresent(System.out::println);
+		customerRepository.findByEmail("kate.austen@example.com").ifPresent(System.out::println);
 		customerRepository.findById("69565326260").ifPresent(System.out::println);
 		customerRepository.findByAccountsIban("TR670006298845544846135199").ifPresent(System.out::println);
 	}
