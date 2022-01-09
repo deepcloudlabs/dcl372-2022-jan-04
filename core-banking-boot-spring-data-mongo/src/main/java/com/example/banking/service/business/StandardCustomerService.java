@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.example.banking.document.CustomerDocument;
 import com.example.banking.repository.CustomerMongoRepository;
 import com.example.banking.service.CustomerService;
+import com.example.banking.service.business.exception.CustomerNotFoundException;
 
 @Service
 public class StandardCustomerService implements CustomerService {
@@ -17,7 +18,8 @@ public class StandardCustomerService implements CustomerService {
 
 	@Override
 	public CustomerDocument findCustomerByIdentity(String identity) {
-		return customerMongoRepository.findById(identity).orElse(new CustomerDocument());
+		return customerMongoRepository.findById(identity).orElseThrow(() -> new CustomerNotFoundException(
+				String.format("Cannot find the customer with identity %s", identity), identity));
 	}
 
 }

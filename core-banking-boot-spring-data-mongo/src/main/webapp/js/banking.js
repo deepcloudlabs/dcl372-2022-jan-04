@@ -29,7 +29,7 @@ class Transfer {
 			fromIban: this.fromAccount().iban,
 			toIdentity: this.toIdentity(),
 			toIban: this.toAccount().iban,
-			amount: this.amount() 
+			amount: this.amount()
 		});
 	}
 }
@@ -42,28 +42,40 @@ class BankingViewModel {
 
 	find = async () => {
 		let customer = await this.findCustomer(this.customer.identity());
-		this.customer.update(customer);
+		if (customer.hasOwnProperty('status')) {
+			toastr.error(customer.message, 'Error');
+		} else {
+			this.customer.update(customer);
+		}
 	}
 
 	findFromCustomer = async () => {
 		let customer = await this.findCustomer(this.transfer.fromIdentity());
-		this.transfer.fromAccounts(customer.accounts);
+		if (customer.hasOwnProperty('status')) {
+			toastr.error(customer.message, 'Error');
+		} else {
+			this.transfer.fromAccounts(customer.accounts);
+		}
 	}
 
 	findToCustomer = async () => {
 		let customer = await this.findCustomer(this.transfer.toIdentity());
-		this.transfer.toAccounts(customer.accounts);
+		if (customer.hasOwnProperty('status')) {
+			toastr.error(customer.message, 'Error');
+		} else {
+			this.transfer.toAccounts(customer.accounts);
+		}
 	}
 
-	
-    findCustomer = async (identity) => {
+
+	findCustomer = async (identity) => {
 		return await fetch(`${AppConfig.url}/customers/${identity}`, {
-				headers: {
-					"Accept": "application/json"
-				}
-			}).then(res => res.json());
-    }
-    
+			headers: {
+				"Accept": "application/json"
+			}
+		}).then(res => res.json());
+	}
+
 	transferMoney = () => {
 		fetch(`${AppConfig.url}/bank`, {
 			method: "POST",
@@ -75,7 +87,10 @@ class BankingViewModel {
 		})
 			.then(res => res.json())
 			.then(result => {
-				console.log(result);
+				if (result.status == 'FAILED')
+				   toastr.error(result.message, 'Transfer');
+				else   
+				   toastr.success('Money transfer is successful.', 'Transfer');
 			});
 	}
 }
