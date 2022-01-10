@@ -17,7 +17,25 @@ public class StandardTransferService implements TransferService {
 
 	@Override
 	public void transfer(String fromIdentity, String fromIban, String toIdentity, String toIban, double amount) {
-		//TODO: implement the transfer logic
+		var fromCustomer = customerMongoRepository.findById(fromIdentity)
+		                       .orElseThrow(() -> new CustomerNotFoundException("Cannot find customer",fromIdentity));
+		var toCustomer = customerMongoRepository.findById(toIdentity)
+				               .orElseThrow(() -> new CustomerNotFoundException("Cannot find customer",toIdentity));
+
+		var fromAccount = fromCustomer.getAccounts()
+				                      .stream()
+				                      .filter(account -> account.getIban().equals(fromIban))
+				                      .findFirst()
+				                      .orElseThrow(() -> new AccountNotFoundException("Cannot find the account",fromIban));
+		var toAccount = toCustomer.getAccounts()
+				.stream()
+				.filter(account -> account.getIban().equals(toIban))
+				.findFirst()
+				.orElseThrow(() -> new AccountNotFoundException("Cannot find the account",fromIban));
+		fromAccount.withdraw(amount);
+		toAccount.deposit(amount);
+		customerMongoRepository.save(fromCustomer);
+		customerMongoRepository.save(toCustomer);
 	}
 
 }
